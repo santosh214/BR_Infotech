@@ -1,34 +1,29 @@
 import React from 'react'
 import {useFormik} from 'formik'
 
-const   initialValues={
-    name:'',
-    email:''
-}
-const onSubmit=values=>{
-    console.log("form data",values)
-}
-const  validate=values=>{
-    let errors={
-    }
-    if(!values.name){
-        errors.name="Required"
-    }
-    if(!values.email){
-        errors.email="Required"
-    } else if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(values.email)) {
-        errors.email = 'Invalid email address';
-      }
-    return errors;
-}
-
-
-export default function Login() {
-    
+export default function Login(props) {
    const formik=  useFormik({
-       initialValues,
-       onSubmit,
-       validate
+       initialValues:{
+        name:'',
+        email:'',
+    },
+       onSubmit:values=>{
+        console.log("form data",values)
+        props.history.push('/home')
+    },
+       validate:values=>{
+        let errors={
+        }
+        if(!values.name){
+            errors.name="Required"
+        }
+        if(!values.email){
+            errors.email="Required"
+        } else if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(values.email)) {
+            errors.email = 'Invalid email address';
+          }
+        return errors;
+    }
        
     })
     return (
@@ -47,7 +42,7 @@ export default function Login() {
                             <input type="email" name="email" id="email" className="form-control" onChange={formik.handleChange} value={formik.values.email} />
                             {formik.errors.email? <small className="text-danger">{formik.errors.email}</small> :null}
                         </div>
-                        <button  type="button" className="btn btn-primary mt-3">Submit</button>
+                        <button  type="submit" className="btn btn-primary mt-3">Submit</button>
                     </form>
                 </div>
             </div>
