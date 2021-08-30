@@ -1,7 +1,8 @@
 import React from 'react'
 import {useFormik} from 'formik'
-
-export default function Login(props) {
+import {connect} from 'react-redux'
+import {UserLogin} from '../action/index'
+function Login(props) {
    const formik=  useFormik({
        initialValues:{
         name:'',
@@ -49,3 +50,10 @@ export default function Login(props) {
         </div>
     )
 }
+const mapStateToProps=dispatch=>({
+
+})
+const mapDispatchToProps=dispatch=>({
+    addUser:data=>dispatch(UserLogin(data))
+})
+export default connect(mapStateToProps,mapDispatchToProps)(Login)
